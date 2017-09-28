@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Homework_Week_4"
 author: "Arora"
 date: "September 28, 2017"
 output: html_document
@@ -36,6 +36,8 @@ barplot(probset, names.arg = x, space = 0, xlab = "Number of Calls", ylab = "Pro
 #Problem 5
 #This is the generation of the histogram simulating the number of times she hears calls over 104 days. I could not remove the slide function from this and get the code to work. 
 #This code was also taken from module 8. The breaks have been taken differently with the seq function rather than the count function from previously. I tried it with the breaks being 2 or more but I think in this case this works much better because each count can be found though it might then be useful to have every bar labeled. 
+
+
 ```{r}
 library(manipulate)
 outcomes <- c(0:30)
