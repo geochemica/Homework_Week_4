@@ -56,3 +56,86 @@ v
 s<-sqrt(v)
 s
 ```
+#Problem 2
+#ggplot boxplots of gender versus (height, weight, age, number of zombies killed, and years of education)
+
+```{r}
+#Plot for Height
+library(ggplot2)
+p <- ggplot(data = d, aes(x = gender, y = height))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + ylab("height")
+p
+```
+```{r}
+#Plot for Weight
+p <- ggplot(data = d, aes(x = gender, y = weight))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + ylab("weight")
+p
+```
+
+```{r}
+#Plot for Age
+p <- ggplot(data = d, aes(x = gender, y = age))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + ylab("age")
+p
+```
+
+```{r}
+#Plot for Number of Zombies Killed
+p <- ggplot(data = d, aes(x = gender, y = zombies_killed))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + ylab("Number of Zombies Killed")
+p
+```
+
+```{r}
+#Plot for Years of Education
+p <- ggplot(data = d, aes(x = gender, y = years_of_education))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + ylab("Years of Education")
+p
+```
+
+#Problem 3
+#Time to make the scatterplots of gender versus (height, weight, age, number of zombies killed, and years of education)
+```{r}
+#Scatterplot for Gender versus Height
+p <- ggplot(data = d, aes(x = gender, y = height, 
+    color = factor(gender)))  # first, we build a plot object and color points by Family
+p <- p + xlab("Gender") + ylab("Height")  # then we modify the axis labels
+p <- p + geom_point()  # then we make a scatterplot
+p <- p + theme(legend.position = "bottom", legend.title = element_blank())  # then we modify the legend
+p  # and, finally, we plot the object
+```
+
+```{r}
+#Scatterplot for Gender versus Weight
+p <- ggplot(data = d, aes(x = gender, y = weight, 
+    color = factor(gender)))  # first, we build a plot object and color points by Family
+p <- p + xlab("Gender") + ylab("Height")  # then we modify the axis labels
+p <- p + geom_point()  # then we make a scatterplot
+p <- p + theme(legend.position = "bottom", legend.title = element_blank())  # then we modify the legend
+p  # and, finally, we plot the object
+```
+
+```{r}
+#Scatterplot for Gender versus Weight
+p <- ggplot(data = d, aes(x = gender, y = weight, 
+    color = factor(gender)))  # first, we build a plot object and color points by Family
+p <- p + xlab("Gender") + ylab("Age")  # then we modify the axis labels
+p <- p + geom_point()  # then we make a scatterplot
+p <- p + theme(legend.position = "bottom", legend.title = element_blank())  # then we modify the legend
+p  # and, finally, we plot the object
+```
+
+
+#Problem 4
+#Q-Q Historgrams and Looking for Normality
