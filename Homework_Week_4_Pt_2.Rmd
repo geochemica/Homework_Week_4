@@ -1,0 +1,58 @@
+---
+title: "Homework_Week_4_Part_2"
+author: "Arora"
+date: "September 30, 2017"
+output: html_document
+---
+
+```{r}
+library(curl)
+f <- f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN597_Fall17/zombies.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+```
+#Problem 1: Calculate the population mean and standard deviation for the following variables: height, weight, age, number of zombies killed and years of education. 
+
+```{r}
+data(d)
+
+#Height
+m<-mean(d[,5])
+m
+v<-var(d[,5])*(999/1000)
+v
+s<-sqrt(v)
+s
+
+#Weight
+m<-mean(d[,6])
+m
+v<-var(d[,6])*(999/1000)
+v
+s<-sqrt(v)
+s
+
+#Age
+m<-mean(d[,10])
+m
+v<-var(d[,10])*(999/1000)
+v
+s<-sqrt(v)
+s
+
+#Number of Zombies Killed
+m<-mean(d[,7])
+m
+v<-var(d[,7])*(999/1000)
+v
+s<-sqrt(v)
+s
+
+#Years of Education
+m<-mean(d[,8])
+m
+v<-var(d[,8])*(999/1000)
+v
+s<-sqrt(v)
+s
+```
