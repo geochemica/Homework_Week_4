@@ -230,3 +230,178 @@ upper
 lower<-qnorm(0.05, mean=m, sd=sigma)
 lower
 ```
+#Problem 6
+#This is where 99 additional samples are drawn and the mean for each variable is calculated for each sample (that's 5 variables times 99 additional samples). The standard deviations are also calculated. Then discuss what the sampling distributions look like. 
+
+#For problem six, could I use the code replicate? Or should I calculate the population mean and varience etc. and then draw from it 99 times and then take the mean of the means and the mean of the standard deviations from there?
+
+
+#For Height
+```{r}
+x <- d$height
+m <- mean(x)
+n <- length(x)
+v <- var(x)/(1000-1)
+stdv <- sqrt(v)
+
+
+#And then from above I would set up the variable to calculate 99 iterations?
+
+set <- NULL  # sets up a dummy variable to hold our  simulations
+n <- 15
+for (i in 1:99) {
+    set[i] <- mean(sample(x, n, replace = TRUE))
+}
+
+s<-d[sample(nrow(d), 30), ]
+s
+
+m<-mean(s$height)
+m
+
+#b is the mean of the all 100 samples
+b<-(mean(set)+m)/2
+b
+#g is the addition of the two standard deviations which has to go through the combination of the variances and then the square root of the combined variance is the standard deviation of the 100 samples. I think in this case it would be a lot easier to simply take 100 samples the first time around instead of trying to combine both data sets. 
+j<-(30*(stdv)+2970*sd(set))/sqrt(30+2970)
+j
+#j is the variance 
+g<-sqrt(j)
+g
+```
+
+#For Weight
+```{r}
+x <- d$weight
+m <- mean(x)
+n <- length(x)
+v <- var(x)/(1000-1)
+stdv <- sqrt(v)
+
+
+#And then from above I would set up the variable to calculate 99 iterations?
+
+set <- NULL  # sets up a dummy variable to hold our  simulations
+n <- 15
+for (i in 1:99) {
+    set[i] <- mean(sample(x, n, replace = TRUE))
+}
+
+s<-d[sample(nrow(d), 30), ]
+s
+
+m<-mean(s$weight)
+m
+
+#b is the mean of the all 100 samples
+b<-(mean(set)+m)/2
+b
+#g is the addition of the two standard deviations which has to go through the combination of the variances and then the square root of the combined variance is the standard deviation of the 100 samples. I think in this case it would be a lot easier to simply take 100 samples the first time around instead of trying to combine both data sets. 
+j<-(30*(stdv)+2970*sd(set))/sqrt(30+2970)
+j
+#j is the variance 
+g<-sqrt(j)
+g
+```
+
+#For Age
+```{r}
+x <- d$age
+m <- mean(x)
+n <- length(x)
+v <- var(x)/(1000-1)
+stdv <- sqrt(v)
+
+
+#And then from above I would set up the variable to calculate 99 iterations?
+
+set <- NULL  # sets up a dummy variable to hold our  simulations
+n <- 15
+for (i in 1:99) {
+    set[i] <- mean(sample(x, n, replace = TRUE))
+}
+
+s<-d[sample(nrow(d), 30), ]
+s
+
+m<-mean(s$age)
+m
+
+#b is the mean of the all 100 samples
+b<-(mean(set)+m)/2
+b
+#g is the addition of the two standard deviations which has to go through the combination of the variances and then the square root of the combined variance is the standard deviation of the 100 samples. I think in this case it would be a lot easier to simply take 100 samples the first time around instead of trying to combine both data sets. 
+j<-(30*(stdv)+2970*sd(set))/sqrt(30+2970)
+j
+#j is the variance 
+g<-sqrt(j)
+g
+```
+
+#For Number of Zombies Killed
+```{r}
+x <- d$zombies_killed
+m <- mean(x)
+n <- length(x)
+v <- var(x)/(1000-1)
+stdv <- sqrt(v)
+
+
+#And then from above I would set up the variable to calculate 99 iterations?
+
+set <- NULL  # sets up a dummy variable to hold our  simulations
+n <- 15
+for (i in 1:99) {
+    set[i] <- mean(sample(x, n, replace = TRUE))
+}
+
+s<-d[sample(nrow(d), 30), ]
+s
+
+m<-mean(s$zombies_killed)
+m
+
+#b is the mean of the all 100 samples
+b<-(mean(set)+m)/2
+b
+#g is the addition of the two standard deviations which has to go through the combination of the variances and then the square root of the combined variance is the standard deviation of the 100 samples. I think in this case it would be a lot easier to simply take 100 samples the first time around instead of trying to combine both data sets. 
+j<-(30*(stdv)+2970*sd(set))/sqrt(30+2970)
+j
+#j is the variance 
+g<-sqrt(j)
+g
+```
+
+#For Years of Education
+```{r}
+x <- d$years_of_education
+m <- mean(x)
+n <- length(x)
+v <- var(x)/(1000-1)
+stdv <- sqrt(v)
+
+
+#And then from above I would set up the variable to calculate 99 iterations?
+
+set <- NULL  # sets up a dummy variable to hold our  simulations
+n <- 15
+for (i in 1:99) {
+    set[i] <- mean(sample(x, n, replace = TRUE))
+}
+
+s<-d[sample(nrow(d), 30), ]
+s
+
+m<-mean(s$years_of_education)
+m
+
+#b is the mean of the all 100 samples
+b<-(mean(set)+m)/2
+b
+#g is the addition of the two standard deviations which has to go through the combination of the variances and then the square root of the combined variance is the standard deviation of the 100 samples. I think in this case it would be a lot easier to simply take 100 samples the first time around instead of trying to combine both data sets. 
+j<-(30*(stdv)+2970*sd(set))/sqrt(30+2970)
+j
+#j is the variance 
+g<-sqrt(j)
+g
+```
