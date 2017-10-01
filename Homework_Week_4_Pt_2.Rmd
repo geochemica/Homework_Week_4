@@ -170,32 +170,63 @@ hist(d$years_of_education, breaks = seq(from = 0, to = 10, x = 1))
 s<-d[sample(nrow(d), 30), ]
 s
 
-mean(s$height)
+m<-mean(s$height)
+m
 v<-var(s$height)
 v
 sigma<-sqrt(v)
 sigma
+sample_standard_error<-sqrt(sigma^2/30)
+sample_standard_error
+upper<-qnorm(0.95, mean=m, sd=sigma)
+upper
+lower<-qnorm(0.05, mean=m, sd=sigma)
+lower
 
 mean(s$weight)
+m
 v<-var(s$weight)
 v
 sigma<-sqrt(v)
 sigma
+sample_standard_error<-sqrt(sigma^2/30)
+sample_standard_error
+upper<-qnorm(0.95, mean=m, sd=sigma)
+upper
+lower<-qnorm(0.05, mean=m, sd=sigma)
+lower
 
 mean(s$age)
+m
 v<-var(s$age)
 v
 sigma<-sqrt(v)
 sigma
+sample_standard_error<-sqrt(sigma^2/30)
+sample_standard_error
 
 mean(s$zombies_killed)
 v<-var(s$zombies_killed)
 v
 sigma<-sqrt(v)
 sigma
+sample_standard_error<-sqrt(sigma^2/30)
+sample_standard_error
+upper<-qnorm(0.95, mean=m, sd=sigma)
+upper
+lower<-qnorm(0.05, mean=m, sd=sigma)
+lower
 
 mean(s$years_of_education)
+m
 v<-var(s$years_of_education)
 v
 sigma<-sqrt(v)
 sigma
+sample_standard_error<-sqrt(sigma^2/30)
+sample_standard_error
+upper<-qnorm(0.95, mean=m, sd=sigma)
+upper
+lower<-qnorm(0.05, mean=m, sd=sigma)
+lower
+```
