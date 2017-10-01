@@ -139,3 +139,26 @@ p  # and, finally, we plot the object
 
 #Problem 4
 #Q-Q Historgrams and Looking for Normality
+```{r}
+qqnorm(d$height, main="Normal QQ plot for Height")
+qqline(d$height, col="blue")
+hist(d$height, breaks = seq(from = 50, to = 100, by = 5), probability = TRUE)
+
+qqnorm(d$weight, main="Normal QQ plot for Height")
+qqline(d$weight, col="blue")
+hist(d$weight, breaks = seq(from = 80, to = 220, x=1), probability = TRUE)
+
+qqnorm(d$age, main="Normal QQ plot for Age")
+qqline(d$age, col="blue")
+hist(d$age, breaks = seq(from = 0, to = 30, x = 1))
+
+qqnorm(d$zombies_killed, main="Normal QQ plot for Number of Zombies Killed")
+qqline(d$zombies_killed, col="blue")
+hist(d$zombies_killed, breaks = seq(from = 0, to = 15, x = 1))
+#This is a Poisson distribution
+
+qqnorm(d$years_of_education, main="Normal QQ plot for Years of Education")
+qqline(d$years_of_education, col="blue")
+hist(d$years_of_education, breaks = seq(from = 0, to = 10, x = 1))
+#This is also a Poisson distribution
+```
