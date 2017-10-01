@@ -162,3 +162,40 @@ qqline(d$years_of_education, col="blue")
 hist(d$years_of_education, breaks = seq(from = 0, to = 10, x = 1))
 #This is also a Poisson distribution
 ```
+
+#Problem 5
+### Using sample() to gain a single subset of 30 zombie survivers and calculating the mean and standard deviation for each of the following varaibles (height, weight, age, years of education, number of zombies killed)
+
+```{r}
+s<-d[sample(nrow(d), 30), ]
+s
+
+mean(s$height)
+v<-var(s$height)
+v
+sigma<-sqrt(v)
+sigma
+
+mean(s$weight)
+v<-var(s$weight)
+v
+sigma<-sqrt(v)
+sigma
+
+mean(s$age)
+v<-var(s$age)
+v
+sigma<-sqrt(v)
+sigma
+
+mean(s$zombies_killed)
+v<-var(s$zombies_killed)
+v
+sigma<-sqrt(v)
+sigma
+
+mean(s$years_of_education)
+v<-var(s$years_of_education)
+v
+sigma<-sqrt(v)
+sigma
