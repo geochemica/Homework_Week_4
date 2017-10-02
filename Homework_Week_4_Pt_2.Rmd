@@ -17,44 +17,65 @@ head(d)
 data(d)
 
 #Height
-m<-mean(d[,5])
+m<-mean(d$height)
 m
-v<-var(d[,5])*(999/1000)
-v
-s<-sqrt(v)
-s
+
+j<-d$height
+
+pop_v <- function(j) {
+    sum((j - mean(j))^2)/(length(j))
+}
+pop_v(j)
+sqrt(pop_v(j))
 
 #Weight
 m<-mean(d[,6])
 m
-v<-var(d[,6])*(999/1000)
-v
-s<-sqrt(v)
-s
+
+j<-d$weight
+
+pop_v <- function(j) {
+    sum((j - mean(j))^2)/(length(j))
+}
+pop_v(j)
+sqrt(pop_v(j))
+
 
 #Age
 m<-mean(d[,10])
 m
-v<-var(d[,10])*(999/1000)
-v
-s<-sqrt(v)
-s
+
+j<-d$age
+
+pop_v <- function(j) {
+    sum((j - mean(j))^2)/(length(j))
+}
+pop_v(j)
+sqrt(pop_v(j))
 
 #Number of Zombies Killed
 m<-mean(d[,7])
 m
-v<-var(d[,7])*(999/1000)
-v
-s<-sqrt(v)
-s
+
+j<-d$zombies_killed
+
+pop_v <- function(j) {
+    sum((j - mean(j))^2)/(length(j))
+}
+pop_v(j)
+sqrt(pop_v(j))
 
 #Years of Education
 m<-mean(d[,8])
 m
-v<-var(d[,8])*(999/1000)
-v
-s<-sqrt(v)
-s
+
+j<-d$years_of_education
+
+pop_v <- function(j) {
+    sum((j - mean(j))^2)/(length(j))
+}
+pop_v(j)
+sqrt(pop_v(j))
 ```
 #Problem 2
 #ggplot boxplots of gender versus (height, weight, age, number of zombies killed, and years of education)
@@ -405,3 +426,4 @@ j
 g<-sqrt(j)
 g
 ```
+
