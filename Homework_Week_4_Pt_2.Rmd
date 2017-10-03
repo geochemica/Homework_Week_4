@@ -189,6 +189,7 @@ hist(d$years_of_education, breaks = seq(from = 0, to = 10, x = 1))
 ```{r}
 s<-d[sample(nrow(d), 30), ]
 s
+n<-30
 
 m<-mean(s$height)
 m
