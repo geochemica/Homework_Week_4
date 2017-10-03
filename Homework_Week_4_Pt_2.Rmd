@@ -11,7 +11,7 @@ f <- f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github
 d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
 head(d)
 ```
-#Problem 1: Calculate the population mean and standard deviation for the following variables: height, weight, age, number of zombies killed and years of education. 
+###Problem 1: Calculate the population mean and standard deviation for the following variables: height, weight, age, number of zombies killed and years of education. 
 
 ```{r}
 data(d)
@@ -78,8 +78,8 @@ pop_v <- function(j) {
 pop_v(j)
 sqrt(pop_v(j))
 ```
-#Problem 2
-#ggplot boxplots of gender versus (height, weight, age, number of zombies killed, and years of education)
+###Problem 2
+###ggplot boxplots of gender versus (height, weight, age, number of zombies killed, and years of education)
 
 ```{r}
 #Plot for Height
@@ -126,8 +126,8 @@ p <- p + ylab("Years of Education")
 p
 ```
 
-#Problem 3
-#Time to make the scatterplots of gender versus (height, weight, age,)
+###Problem 3
+###Time to make the scatterplots of gender versus (height, weight, age,)
 ```{r}
 #Scatterplot for Age versus Height
 
@@ -152,10 +152,10 @@ p <- p + theme(legend.position = "bottom", legend.title = element_blank())  # th
 p  # and, finally, we plot the object
 ```
 
-#For both there seems to be a linear correlation however there seems to be a larger correlation for height than for weight
+###For both there seems to be a linear correlation however there seems to be a larger correlation for height than for weight
 
-#Problem 4
-#Q-Q Historgrams and Looking for Normality
+###Problem 4
+###Q-Q Historgrams and Looking for Normality
 ```{r}
 qqnorm(d$height, main="Normal QQ plot for Height")
 qqline(d$height, col="blue")
@@ -183,7 +183,7 @@ hist(d$years_of_education, breaks = seq(from = 0, to = 10, x = 1))
 #This is also a Poisson distribution therefore the qqnorm are not valid
 ```
 
-#Problem 5
+###Problem 5
 ### Using sample() to gain a single subset of 30 zombie survivers and calculating the mean and standard deviation for each of the following varaibles (height, weight, age, years of education, number of zombies killed)
 
 ```{r}
@@ -196,8 +196,6 @@ v<-var(s$height)
 v
 sigma<-sqrt(v)
 sigma
-sample_standard_error<-sqrt(sigma^2/30)
-sample_standard_error
 e <- sqrt(v/n)
 
 upper<-m+qnorm(0.95, mean=m, sd=sigma)*e
@@ -211,8 +209,6 @@ v<-var(s$weight)
 v
 sigma<-sqrt(v)
 sigma
-sample_standard_error<-sqrt(sigma^2/30)
-sample_standard_error
 e <- sqrt(v/n)
 
 upper<-m+qnorm(0.95, mean=m, sd=sigma)*e
@@ -226,8 +222,6 @@ v<-var(s$age)
 v
 sigma<-sqrt(v)
 sigma
-sample_standard_error<-sqrt(sigma^2/30)
-sample_standard_error
 e <- sqrt(v/n)
 
 upper<-m+qnorm(0.95, mean=m, sd=sigma)*e
@@ -246,9 +240,11 @@ lambda<-sum(s$zombies_killed)/length(s)
 lambda
 standard_error<-sqrt(lambda/length(s))
 standard_error
-#confidence interval is lambda +/-1.96(standard_error)
-upper<-lambda+1.96(standard_error)
-lower<-lambda-1.96(standard_error)
+#confidence interval is lambda +/-1.96(standard_error); the 1.96 means that 1.96 standard deviations from the mean fall under 95% of the normal curve. I think this means that this is a type of normal approximation, but I could find no other way of creating a confidence interval for a Poisson distribution. 
+upper<-lambda+1.96*(standard_error)
+upper
+lambda-1.96*(standard_error)
+lower
 
 
 mean(s$years_of_education)
@@ -262,17 +258,16 @@ lambda
 standard_error<-sqrt(lambda/length(s))
 standard_error
 #confidence interval is lambda +/-1.96(standard_error)
-upper<-lambda+1.96(standard_error)
-lower<-lambda-1.96(standard_error)
-
+upper<-lambda+1.96*(standard_error)
+upper
+lambda-1.96*(standard_error)
+lower
 ```
-#Problem 6
-#This is where 99 additional samples are drawn and the mean for each variable is calculated for each sample (that's 5 variables times 99 additional samples). The standard deviations are also calculated. Then discuss what the sampling distributions look like. 
-
-#For problem six, could I use the code replicate? Or should I calculate the population mean and varience etc. and then draw from it 99 times and then take the mean of the means and the mean of the standard deviations from there?
+###Problem 6
+###This is where 99 additional samples are drawn and the mean for each variable is calculated for each sample (that's 5 variables times 99 additional samples). The standard deviations are also calculated. Then discuss what the sampling distributions look like. 
 
 
-#For Height
+###For Height
 ```{r}
 x <- d$height
 m <- mean(x)
@@ -297,13 +292,14 @@ m
 #b is the mean of the all 100 samples
 b<-(99*(mean(set))+1*mean(s$height))/100
 b
-#g is the addition of the two standard deviations which has to go through the combination of the variances and then the square root of the combined variance is the standard deviation of the 100 samples. I think in this case it would be a lot easier to simply take 100 samples the first time around instead of trying to combine both data sets. 
-j<-var(s$height)+var(set)
+#g is the new standard deviation of both s and set which I took by combining the new variances into j. I think it would be a lot easier to just run 100 simulations than trying to combine; the combination of the variances should work because it follows the variance sum law because both are independent. 
+ j<-var(s$height)+var(set)
 j
-#j is the variance combined
-#this uses the variance sum law because both are indepdent of each other
 g<-sqrt(j)
 g
+qqnorm(set, main="Normal QQ plot for Height")
+qqline(set, col="blue")
+hist(set)
 ```
 
 #For Weight
@@ -331,12 +327,16 @@ m
 #b is the mean of the all 100 samples
 b<-(99*(mean(set))+1*mean(s$weight))/100
 b
-#g is the addition of the two standard deviations which has to go through the combination of the variances and then the square root of the combined variance is the standard deviation of the 100 samples. I think in this case it would be a lot easier to simply take 100 samples the first time around instead of trying to combine both data sets. 
+#j is the combination of the variance and g is the standard deviation
 j<-var(s$height)+var(set)
 j
 #j is the variance 
 g<-sqrt(j)
 g
+
+qqnorm(set, main="Normal QQ plot for Weight")
+qqline(set, col="blue")
+hist(set)
 ```
 
 #For Age
@@ -364,12 +364,16 @@ m
 #b is the mean of the all 100 samples
 b<-(99*(mean(set))+1*mean(s$age))/100
 b
-#g is the addition of the two standard deviations which has to go through the combination of the variances and then the square root of the combined variance is the standard deviation of the 100 samples. I think in this case it would be a lot easier to simply take 100 samples the first time around instead of trying to combine both data sets. 
+#j is the combination of the variance and g is the standard deviation
 j<-var(s$age)+var(set)
 j
 #j is the variance 
 g<-sqrt(j)
 g
+
+qqnorm(set, main="Normal QQ plot for Age")
+qqline(set, col="blue")
+hist(set)
 ```
 
 #For Number of Zombies Killed
@@ -397,12 +401,16 @@ m
 #b is the mean of the all 100 samples
 b<-(99*(mean(set))+1*mean(s$zombies_killed))/100
 b
-#g is the addition of the two standard deviations which has to go through the combination of the variances and then the square root of the combined variance is the standard deviation of the 100 samples. I think in this case it would be a lot easier to simply take 100 samples the first time around instead of trying to combine both data sets. 
+#j is the combination of the variance and g is the standard deviation
 j<-var(s$zombies_killed)+var(set)
 j
 #j is the variance 
 g<-sqrt(j)
 g
+
+qqnorm(set, main="Normal QQ plot for Number of Zombies Killed")
+qqline(set, col="blue")
+hist(set)
 ```
 
 #For Years of Education
@@ -430,11 +438,25 @@ m
 #b is the mean of the all 100 samples
 b<-(99*(mean(set))+1*mean(s$years_of_education))/100
 b
-#g is the addition of the two standard deviations which has to go through the combination of the variances and then the square root of the combined variance is the standard deviation of the 100 samples. I think in this case it would be a lot easier to simply take 100 samples the first time around instead of trying to combine both data sets. 
+ 
 j<-var(s$years_of_education)+var(set)
 j
-#j is the variance 
+#j is the combination of the variance and g is the standard deviation
 g<-sqrt(j)
 g
+qqnorm(set, main="Normal QQ plot for Years of Education")
+qqline(set, col="blue")
+hist(set)
 ```
+#Answers for Questions in Problem 6
+####The means and standard deviations when I calculated them last are as follows: Height, mean = 67.55852, sigma = 4.451259; the standard error for height in #5 is 0.9201227 which is far off from the standard deviation which either means there is an issue with the code or that the standard error from the sample does not reflect the standard deviation of the population. 
 
+####For Weight, mean = 143.6187, and sigma = 5.631403. The standard error is 3.651578 whic his closer than for height. 
+
+#### For age mean = 20.13286, and sigma = 3.153109. The standard error is 0.5368274. 
+
+####For Number of Zombies Killed, mean = 2.833333, and sigma = 2.087845. The standard error is 1.019804. This is not close to sigma either. 
+
+####And for Years of Education, mean = 2.973, and 1.743745. The standard error is 0.8831761. This last value is also not close to the standard deviation and again I'm inclined to think that the more samples taken the more likely the values of mean and standard deviation will reflect the true population. 
+
+####Every sampling distribution looked varily normal. However for the ones taken from a population with a normal distribution (height, weight, and age), the sample distributions looked less normal. For the variables from the populations not normally distributed (Poisson distributions were for years of education and number of zombies killed), the sampling distribution looks more normal. This could either be an error in my code, or it could be the issue with bootstrapping. I've been reading that is is not applicable to every situtation and something in my code may have caused bootstrapping to not be a useful tool in sampling this population. 
