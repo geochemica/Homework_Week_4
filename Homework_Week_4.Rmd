@@ -5,27 +5,27 @@ date: "September 28, 2017"
 output: html_document
 ---
 
-#Problem 1
-#This is the probability that she will hear more than eight calls which means that she will hear 9 or more calls
-#This code is for the upper tail of the Poisson distribution and so even though the n = 8, it means nine or more because the addition of the lower=FALSE; if that was not added the function would measure eight or less. 
+###Problem 1
+###This is the probability that she will hear more than eight calls which means that she will hear 9 or more calls
+###This code is for the upper tail of the Poisson distribution and so even though the n = 8, it means nine or more because the addition of the lower=FALSE; if that was not added the function would measure eight or less. 
 ```{r}
 ppois(8, lambda=15, lower=FALSE)
 ```
 
-#Problem 2
-#This is the probability she will hear exactly zero calls. There are two ways to do this; one is to put n =0 so that the probability is of zero or less however there can be nothing less than zero in the probability of count data. The other way is to do 1-probability of everything above one. Both are below and give the same answer. 
+###Problem 2
+###This is the probability she will hear exactly zero calls. There are two ways to do this; one is to put n =0 so that the probability is of zero or less however there can be nothing less than zero in the probability of count data. The other way is to do 1-probability of everything above one. Both are below and give the same answer. 
 ```{r}
 1-ppois(0, lambda=15, lower=FALSE)
 ppois(0, lambda=15)
 ```
-#Problem 3
-#This is the probability that she will hear exactly three calls. To do this I calculated the probability of three or less calls and the probability of two or less calls. When the latter is taken away from the former it should leave the probability of just three calls. 
+###Problem 3
+###This is the probability that she will hear exactly three calls. To do this I calculated the probability of three or less calls and the probability of two or less calls. When the latter is taken away from the former it should leave the probability of just three calls. 
 ```{r}
 ppois(3, lambda=15) - ppois(2, lambda=15)
 ```
 
-#Problem 4
-#This is the generation of the barplot taken from the code from module 8 and modified. The range was specified within the module homework section
+###Problem 4
+###This is the generation of the barplot taken from the code from module 8 and modified. The range was specified within the module homework section
 ```{r}
 x <- 0:30
 l = 15
@@ -33,12 +33,12 @@ probset <- dpois(x = x, lambda = l)
 barplot(probset, names.arg = x, space = 0, xlab = "Number of Calls", ylab = "Probability of Hearing Calls", main = "Probability Mass Function")
 ```
 
-#Problem 5
-#This is the generation of the histogram simulating the number of times she hears calls over 104 days. I could not remove the slide function from this and get the code to work. 
-#This code was also taken from module 8. The breaks have been taken differently with the seq function rather than the count function from previously. I tried it with the breaks being 2 or more but I think in this case this works much better because each count can be found though it might then be useful to have every bar labeled. 
+###Problem 5
+###This is the generation of the histogram simulating the number of times she hears calls over 104 days. I could not remove the slide function from this and get the code to work. 
+###This code was also taken from module 8. The breaks have been taken differently with the seq function rather than the count function from previously. I tried it with the breaks being 2 or more but I think in this case this works much better because each count can be found though it might then be useful to have every bar labeled. 
 
 
-```{r}
+```{r, eval=FALSE}
 library(manipulate)
 outcomes <- c(0:30)
 manipulate(hist(sample(outcomes, n, replace = TRUE), breaks = seq(0,30,1), probability = TRUE, main = paste("Histogram of Outcomes of ", n, " Days of Listening for Monkey Calls", sep = ""), xlab = "Number of Calls", ylab = "Probability", xlim=c(0,30)), n = slider(0,10000, initial = 104, step = 100))
