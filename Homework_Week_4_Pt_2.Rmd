@@ -160,24 +160,27 @@ p  # and, finally, we plot the object
 qqnorm(d$height, main="Normal QQ plot for Height")
 qqline(d$height, col="blue")
 hist(d$height, breaks = seq(from = 50, to = 100, by = 5), probability = TRUE)
+#This is a normal distribution
 
 qqnorm(d$weight, main="Normal QQ plot for Height")
 qqline(d$weight, col="blue")
 hist(d$weight, breaks = seq(from = 80, to = 220, x=1), probability = TRUE)
+#This is a normal distribution
 
 qqnorm(d$age, main="Normal QQ plot for Age")
 qqline(d$age, col="blue")
 hist(d$age, breaks = seq(from = 0, to = 30, x = 1))
+#This is a normal distribution
 
 qqnorm(d$zombies_killed, main="Normal QQ plot for Number of Zombies Killed")
 qqline(d$zombies_killed, col="blue")
 hist(d$zombies_killed, breaks = seq(from = 0, to = 15, x = 1))
-#This is a Poisson distribution
+#This is a Poisson distribution therefore the qqnorm plots are not valid
 
 qqnorm(d$years_of_education, main="Normal QQ plot for Years of Education")
 qqline(d$years_of_education, col="blue")
 hist(d$years_of_education, breaks = seq(from = 0, to = 10, x = 1))
-#This is also a Poisson distribution
+#This is also a Poisson distribution therefore the qqnorm are not valid
 ```
 
 #Problem 5
@@ -195,9 +198,11 @@ sigma<-sqrt(v)
 sigma
 sample_standard_error<-sqrt(sigma^2/30)
 sample_standard_error
-upper<-qnorm(0.95, mean=m, sd=sigma)
+e <- sqrt(v/n)
+
+upper<-m+qnorm(0.95, mean=m, sd=sigma)*e
 upper
-lower<-qnorm(0.05, mean=m, sd=sigma)
+lower<-qnorm(0.05, mean=m, sd=sigma)*e
 lower
 
 mean(s$weight)
@@ -208,9 +213,11 @@ sigma<-sqrt(v)
 sigma
 sample_standard_error<-sqrt(sigma^2/30)
 sample_standard_error
-upper<-qnorm(0.95, mean=m, sd=sigma)
+e <- sqrt(v/n)
+
+upper<-m+qnorm(0.95, mean=m, sd=sigma)*e
 upper
-lower<-qnorm(0.05, mean=m, sd=sigma)
+lower<-qnorm(0.05, mean=m, sd=sigma)*e
 lower
 
 mean(s$age)
@@ -221,18 +228,28 @@ sigma<-sqrt(v)
 sigma
 sample_standard_error<-sqrt(sigma^2/30)
 sample_standard_error
+e <- sqrt(v/n)
+
+upper<-m+qnorm(0.95, mean=m, sd=sigma)*e
+upper
+lower<-qnorm(0.05, mean=m, sd=sigma)*e
+lower
 
 mean(s$zombies_killed)
 v<-var(s$zombies_killed)
 v
 sigma<-sqrt(v)
 sigma
-sample_standard_error<-sqrt(sigma^2/30)
-sample_standard_error
-upper<-qnorm(0.95, mean=m, sd=sigma)
-upper
-lower<-qnorm(0.05, mean=m, sd=sigma)
-lower
+#lambda is equal to the number of zombies killed over the number of people killing zombies
+#therefore lambda is equal to sum(s$zombies_killed)/30
+lambda<-sum(s$zombies_killed)/length(s)
+lambda
+standard_error<-sqrt(lambda/length(s))
+standard_error
+#confidence interval is lambda +/-1.96(standard_error)
+upper<-lambda+1.96(standard_error)
+lower<-lambda-1.96(standard_error)
+
 
 mean(s$years_of_education)
 m
@@ -240,12 +257,14 @@ v<-var(s$years_of_education)
 v
 sigma<-sqrt(v)
 sigma
-sample_standard_error<-sqrt(sigma^2/30)
-sample_standard_error
-upper<-qnorm(0.95, mean=m, sd=sigma)
-upper
-lower<-qnorm(0.05, mean=m, sd=sigma)
-lower
+lambda<-sum(s$years_of_education)/length(s)
+lambda
+standard_error<-sqrt(lambda/length(s))
+standard_error
+#confidence interval is lambda +/-1.96(standard_error)
+upper<-lambda+1.96(standard_error)
+lower<-lambda-1.96(standard_error)
+
 ```
 #Problem 6
 #This is where 99 additional samples are drawn and the mean for each variable is calculated for each sample (that's 5 variables times 99 additional samples). The standard deviations are also calculated. Then discuss what the sampling distributions look like. 
@@ -257,7 +276,6 @@ lower
 ```{r}
 x <- d$height
 m <- mean(x)
-n <- length(x)
 v <- var(x)/(1000-1)
 stdv <- sqrt(v)
 
@@ -265,7 +283,7 @@ stdv <- sqrt(v)
 #And then from above I would set up the variable to calculate 99 iterations?
 
 set <- NULL  # sets up a dummy variable to hold our  simulations
-n <- 15
+n <- 30
 for (i in 1:99) {
     set[i] <- mean(sample(x, n, replace = TRUE))
 }
@@ -277,12 +295,13 @@ m<-mean(s$height)
 m
 
 #b is the mean of the all 100 samples
-b<-(mean(set)+m)/2
+b<-(99*(mean(set))+1*mean(s$height))/100
 b
 #g is the addition of the two standard deviations which has to go through the combination of the variances and then the square root of the combined variance is the standard deviation of the 100 samples. I think in this case it would be a lot easier to simply take 100 samples the first time around instead of trying to combine both data sets. 
-j<-(30*(stdv)+2970*sd(set))/sqrt(30+2970)
+j<-var(s$height)+var(set)
 j
-#j is the variance 
+#j is the variance combined
+#this uses the variance sum law because both are indepdent of each other
 g<-sqrt(j)
 g
 ```
@@ -291,7 +310,6 @@ g
 ```{r}
 x <- d$weight
 m <- mean(x)
-n <- length(x)
 v <- var(x)/(1000-1)
 stdv <- sqrt(v)
 
@@ -299,7 +317,7 @@ stdv <- sqrt(v)
 #And then from above I would set up the variable to calculate 99 iterations?
 
 set <- NULL  # sets up a dummy variable to hold our  simulations
-n <- 15
+n <- 30
 for (i in 1:99) {
     set[i] <- mean(sample(x, n, replace = TRUE))
 }
@@ -311,10 +329,10 @@ m<-mean(s$weight)
 m
 
 #b is the mean of the all 100 samples
-b<-(mean(set)+m)/2
+b<-(99*(mean(set))+1*mean(s$weight))/100
 b
 #g is the addition of the two standard deviations which has to go through the combination of the variances and then the square root of the combined variance is the standard deviation of the 100 samples. I think in this case it would be a lot easier to simply take 100 samples the first time around instead of trying to combine both data sets. 
-j<-(30*(stdv)+2970*sd(set))/sqrt(30+2970)
+j<-var(s$height)+var(set)
 j
 #j is the variance 
 g<-sqrt(j)
@@ -325,7 +343,6 @@ g
 ```{r}
 x <- d$age
 m <- mean(x)
-n <- length(x)
 v <- var(x)/(1000-1)
 stdv <- sqrt(v)
 
@@ -333,7 +350,7 @@ stdv <- sqrt(v)
 #And then from above I would set up the variable to calculate 99 iterations?
 
 set <- NULL  # sets up a dummy variable to hold our  simulations
-n <- 15
+n <- 30
 for (i in 1:99) {
     set[i] <- mean(sample(x, n, replace = TRUE))
 }
@@ -345,10 +362,10 @@ m<-mean(s$age)
 m
 
 #b is the mean of the all 100 samples
-b<-(mean(set)+m)/2
+b<-(99*(mean(set))+1*mean(s$age))/100
 b
 #g is the addition of the two standard deviations which has to go through the combination of the variances and then the square root of the combined variance is the standard deviation of the 100 samples. I think in this case it would be a lot easier to simply take 100 samples the first time around instead of trying to combine both data sets. 
-j<-(30*(stdv)+2970*sd(set))/sqrt(30+2970)
+j<-var(s$age)+var(set)
 j
 #j is the variance 
 g<-sqrt(j)
@@ -359,7 +376,6 @@ g
 ```{r}
 x <- d$zombies_killed
 m <- mean(x)
-n <- length(x)
 v <- var(x)/(1000-1)
 stdv <- sqrt(v)
 
@@ -367,7 +383,7 @@ stdv <- sqrt(v)
 #And then from above I would set up the variable to calculate 99 iterations?
 
 set <- NULL  # sets up a dummy variable to hold our  simulations
-n <- 15
+n <- 30
 for (i in 1:99) {
     set[i] <- mean(sample(x, n, replace = TRUE))
 }
@@ -379,10 +395,10 @@ m<-mean(s$zombies_killed)
 m
 
 #b is the mean of the all 100 samples
-b<-(mean(set)+m)/2
+b<-(99*(mean(set))+1*mean(s$zombies_killed))/100
 b
 #g is the addition of the two standard deviations which has to go through the combination of the variances and then the square root of the combined variance is the standard deviation of the 100 samples. I think in this case it would be a lot easier to simply take 100 samples the first time around instead of trying to combine both data sets. 
-j<-(30*(stdv)+2970*sd(set))/sqrt(30+2970)
+j<-var(s$zombies_killed)+var(set)
 j
 #j is the variance 
 g<-sqrt(j)
@@ -393,7 +409,6 @@ g
 ```{r}
 x <- d$years_of_education
 m <- mean(x)
-n <- length(x)
 v <- var(x)/(1000-1)
 stdv <- sqrt(v)
 
@@ -401,7 +416,7 @@ stdv <- sqrt(v)
 #And then from above I would set up the variable to calculate 99 iterations?
 
 set <- NULL  # sets up a dummy variable to hold our  simulations
-n <- 15
+n <- 30
 for (i in 1:99) {
     set[i] <- mean(sample(x, n, replace = TRUE))
 }
@@ -413,10 +428,10 @@ m<-mean(s$years_of_education)
 m
 
 #b is the mean of the all 100 samples
-b<-(mean(set)+m)/2
+b<-(99*(mean(set))+1*mean(s$years_of_education))/100
 b
 #g is the addition of the two standard deviations which has to go through the combination of the variances and then the square root of the combined variance is the standard deviation of the 100 samples. I think in this case it would be a lot easier to simply take 100 samples the first time around instead of trying to combine both data sets. 
-j<-(30*(stdv)+2970*sd(set))/sqrt(30+2970)
+j<-var(s$years_of_education)+var(set)
 j
 #j is the variance 
 g<-sqrt(j)
